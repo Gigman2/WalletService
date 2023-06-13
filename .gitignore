@@ -1,0 +1,8 @@
+# Directories #
+###############
+bin/
+obj/
+
+# Web publish log #
+###################
+*.Publish.xml
