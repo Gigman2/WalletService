@@ -8,7 +8,7 @@ namespace WalletService.Repositories
 
         IEnumerable<Wallet> GetWallets();
 
-        Task<Wallet> GetWalletById(Guid id);
+        Wallet GetWalletById(Guid id);
 
     }
 }

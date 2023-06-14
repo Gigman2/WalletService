@@ -21,9 +21,9 @@ namespace WalletService.Repositories
             dbContext.Add(wallet);
         }
 
-        public async Task<Wallet> GetWalletById(Guid id)
+        public Wallet GetWalletById(Guid id)
         {
-            var wallet = await dbContext.Wallets.FindAsync(id);
+            var wallet = dbContext.Wallets.Find(id);
             if (wallet == null)
             {
                 throw new ArgumentNullException(nameof(wallet));
