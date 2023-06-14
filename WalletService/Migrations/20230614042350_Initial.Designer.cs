@@ -12,8 +12,8 @@ using WalletService.Data;
 namespace WalletService.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230614010503_Initial Migration")]
-    partial class InitialMigration
+    [Migration("20230614042350_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,9 +39,9 @@ namespace WalletService.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()

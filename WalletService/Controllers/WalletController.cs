@@ -20,35 +20,55 @@ namespace WalletService.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<WalletReadDto>> GetWallets()
+        public ActionResult<IEnumerable<WalletMainDto>> GetWallets()
         {
             var wallet = repo.GetWallets();
-            return Ok(dbMapper.Map<IEnumerable<WalletReadDto>>(wallet));
+            return Ok(dbMapper.Map<IEnumerable<WalletMainDto>>(wallet));
         }
 
         [HttpGet]
         [Route("{id:guid}")]
-        public ActionResult<WalletReadDto> GetWalletById([FromRoute] Guid id)
+        public ActionResult<WalletMainDto> GetWalletById([FromRoute] Guid id)
         {
             var wallet = repo.GetWalletById(id);
             if (wallet == null) return NotFound();
 
-            return Ok(dbMapper.Map<WalletReadDto>(wallet));
+            return Ok(dbMapper.Map<WalletMainDto>(wallet));
         }
 
         [HttpPost]
-        public ActionResult<WalletReadDto> CreateWallet(WalletCreateDto payload)
+        public ActionResult<WalletMainDto> CreateWallet(WalletCreateDto payload)
         {
-            var newWallet = dbMapper.Map<Wallet>(payload);
-            repo.CreateWallet(newWallet);
-            var saved = repo.SaveChanges();
-            if (!saved)
+            try
             {
-                return BadRequest();
-            }
+                WalletMainDto newPayload = new WalletMainDto()
+                {
+                    Name = payload.Name,
+                    Type = payload.Type,
+                    AccountNumber = payload.AccountNumber,
+                    AccountScheme = payload.AccountScheme,
+                    Owner = payload.Owner,
+                    Id = Guid.NewGuid(),
+                    CreatedAt = DateTime.Now
+                };
 
-            var result = dbMapper.Map<WalletReadDto>(newWallet);
-            return Ok(result);
+
+                var newWallet = dbMapper.Map<Wallet>(newPayload);
+                repo.CreateWallet(newWallet);
+                var saved = repo.SaveChanges();
+                if (!saved)
+                {
+                    return BadRequest();
+                }
+
+                var result = dbMapper.Map<WalletMainDto>(newWallet);
+                return Ok(result);
+            }
+            catch (ArgumentNullException ex)
+            {
+
+                return BadRequest(new { ErrorMessage = ex.Message, ErrorCode = 400 });
+            }
         }
     }
 }

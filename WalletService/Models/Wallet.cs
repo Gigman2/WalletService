@@ -30,6 +30,6 @@ namespace WalletService.Models
         [Required]
         [Display(Name = "Created At")]
         [DataType(DataType.DateTime)]
-        public string? CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
     }
 }

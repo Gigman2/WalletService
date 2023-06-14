@@ -13,11 +13,11 @@ namespace WalletService.Dtos
         public string? Owner { get; set; }
     }
 
-    public class WalletReadDto : WalletCreateDto
+    public class WalletMainDto : WalletCreateDto
     {
         public Guid Id { get; set; }
 
-        public string? CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 
     public class WalletUpdateDto : WalletCreateDto

@@ -1,5 +1,6 @@
 using WalletService.Data;
 using WalletService.Models;
+using WalletService.Utils;
 
 namespace WalletService.Repositories
 {
@@ -15,7 +16,7 @@ namespace WalletService.Repositories
         {
             if (wallet == null)
             {
-                throw new ArgumentNullException(nameof(wallet));
+                throw new ArgumentNullException(nameof(wallet), "Invalid payload sent");
             }
 
             dbContext.Add(wallet);
@@ -26,7 +27,7 @@ namespace WalletService.Repositories
             var wallet = dbContext.Wallets.Find(id);
             if (wallet == null)
             {
-                throw new ArgumentNullException(nameof(wallet));
+                throw new ArgumentNullException(nameof(wallet), "Wallet not found");
             }
             return wallet;
         }
